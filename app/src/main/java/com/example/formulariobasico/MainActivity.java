@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    private Persona usuario;
+
     private TextView text_respuesta;
     private Button btn_confirmar;
 
@@ -35,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
                     text_respuesta.setText("Error_Usuario o clave vacíos");
                 }else{
                     text_respuesta.setText("Se ha introducido correctamente");
-                    introduceUsuario(edit_usuario.getText().toString(),edit_clave.getText().toString());
-                    //Intent intento1 =new Intent(this, Bienvenida::class.java);
+                    Persona p=new Persona(edit_usuario.getText().toString(),edit_clave.getText().toString());
+                    validarUsuario(p);
+                    //Intent es para cambiar de activity
                     Intent intent = new Intent(MainActivity.this, Bienvenida.class);
-                    //Intent intent = new Intent(MiActividad.this, MiOtraActividad.class);
-
                     startActivity(intent);
                 }
             }
@@ -49,7 +52,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void introduceUsuario(String usuario,String clave){
-        Persona p=new Persona(usuario,clave);
+    public int validarUsuario(Persona u){
+        BaseDatos bd= new BaseDatos();
+        int n=9;
+        for(Persona usu:bd.lista) {
+            if(usu.getUser().equals(u.getUser())) {
+                n=0;
+                if(usu.getClave().equals(u.getClave())) {
+                    n= 1;
+                    break;
+                }else n=-1;
+            }
+        }
+        return n;
     }
 }

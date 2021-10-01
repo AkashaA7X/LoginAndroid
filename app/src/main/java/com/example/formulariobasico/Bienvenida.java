@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 public class Bienvenida extends AppCompatActivity {
 
+    private Persona p;
     private TextView text_bienvenida;
 
     @Override
@@ -16,6 +17,6 @@ public class Bienvenida extends AppCompatActivity {
 
         text_bienvenida=findViewById(R.id.textView6);
 
-        text_bienvenida.setText(text_bienvenida.getText().toString()+" usuario");
+        text_bienvenida.setText("Bienvenido"+p.getUser());
     }
 }
